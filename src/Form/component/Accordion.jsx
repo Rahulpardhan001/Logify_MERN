@@ -26,14 +26,14 @@ const Accordion = ({ title, content }) => {
             {/* Accordion Title */}
             <span className="font-medium">{title}</span>
           </div>
-          {/* {openIndex  && (
+          {openIndex  && (
             <div className="">
               <div className="rounded-lg mt-5 relative ">
                 <div>{content}</div>
               </div>
             </div>
-          )} */}
-          <div
+          )}
+          {/* <div
             className={`transition-[max-height] duration-500 ease-in-out overflow-hidden ${
               openIndex ? "max-h-96" : "max-h-0"
             }`}
@@ -41,7 +41,7 @@ const Accordion = ({ title, content }) => {
             <div className="rounded-lg mt-5 relative ">
               <div>{content}</div>
             </div>
-          </div>
+          </div> */}
 
         </div>
       </div>

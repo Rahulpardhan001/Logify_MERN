@@ -50,17 +50,19 @@ function Page1() {
               />
             }
           />
-            <Accordion
-            title="Vist"
+          <Accordion
+            title="Visit"
             content={
-              <Vist
+              <Visit
                 handleInputChange={handleInputChange}
                 formData={formData}
               />
             }
           />
+          
         </div>
-        <div className="flex justify-center align-middle fixed bottom-0 left-[385px] z-1 mb-2 ">
+
+         <div className="flex justify-center align-middle fixed bottom-0 left-[385px] z-1 mb-2 ">
         <button
           type="button"
           className="bg-teal-500 p-2 px-3 rounded text-white font-normal"
@@ -122,7 +124,7 @@ function JobContent({ handleInputChange, formData ,handleDateChange}) {
         <DatePicker
           className="mt-1 px-3 py-2 focus-visible:outline-none text-[#acb0c3] bg-[#f1f2f3] rounded-md    w-[370px] sm:text-sm"
           dateFormat="dd/MM/yyyy"
-          placeholderText="02/06/2024 "
+          placeholderText="02/06/2024"
           peekNextMonth
           showMonthDropdown
           selected={formData.assesmentDate || ""}
@@ -208,7 +210,7 @@ function Contact({ formData, handleInputChange }) {
 
 
 // ****************** contact component ************//
-function Vist({ formData, handleInputChange }) {
+function Visit({ formData, handleInputChange }) {
   return (
     <div>
       <CustomInput
