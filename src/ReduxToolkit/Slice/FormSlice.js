@@ -5,14 +5,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const formSlice = createSlice({
   name: "form",
   initialState: {
+     // **********job Report Accordion******//
+    sitePhoto:null,
     Reference_no: "",
     customer: "",
     delivery_Address: "",
-    contact: "",
-    contact_email: "",
-    AssessmentData: "",
     assesmentDate: "",
     reviewDate: "",
+    engineer:"",
+    
+    // **********contact Accordion******//
+    contact: "",
+    contact_email: "",
     engineer: "",
     // **********Notes Accordion******//
     notes: "",

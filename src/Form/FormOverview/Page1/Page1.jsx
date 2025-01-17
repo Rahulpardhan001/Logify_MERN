@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatedFormData } from "../../../ReduxToolkit/Slice/FormSlice";
-import CustomInput from "../../component/CustomInput";
+import CustomInput, {
+  SelectdInput,
+  TabButton,
+} from "../../component/CustomInput";
 import Accordion from "../../component/Accordion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import InnerAccordion from "../../component/InnerAccordion";
 
 function Page1() {
   const formData = useSelector((state) => state.form);
@@ -13,7 +17,6 @@ function Page1() {
   console.log("Form Data", formData);
 
   const handleInputChange = async (e) => {
-   
     const { name, value } = e.target;
     await dispatch(updatedFormData({ name, value }));
   };
@@ -22,10 +25,10 @@ function Page1() {
     console.log(formData, "forma dk");
   };
 
-// **********************Handle date change*****************//
-  const handleDateChange=async(value,name)=>{
-  await dispatch(updatedFormData({ name, value }));
-  }
+  // **********************Handle date change*****************//
+  const handleDateChange = async (value, name) => {
+    await dispatch(updatedFormData({ name, value }));
+  };
 
   return (
     <div>
@@ -59,17 +62,16 @@ function Page1() {
               />
             }
           />
-          
         </div>
 
-         <div className="flex justify-center align-middle fixed bottom-0 left-[385px] z-1 mb-2 ">
-        <button
-          type="button"
-          className="bg-teal-500 p-2 px-3 rounded text-white font-normal"
-        >
-          Save Job
-        </button>
-      </div>
+        <div className="flex justify-center align-middle fixed bottom-0 left-[385px] z-1 mb-2 ">
+          <button
+            type="button"
+            className="bg-teal-500 p-2 px-3 rounded text-white font-normal"
+          >
+            Save Job
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -78,11 +80,19 @@ function Page1() {
 export default Page1;
 
 // ****************** job Content component ************//
-function JobContent({ handleInputChange, formData ,handleDateChange}) {
-
-
+function JobContent({ handleInputChange, formData, handleDateChange }) {
   return (
     <div>
+      {/* input type file */}
+      <CustomInput
+        lableText="Site Photo"
+        inputName="sitePhoto"
+        inputType="file"
+        inputValue={formData.sitePhoto}
+        inputChange={handleInputChange}
+        customStyle="additional-custom-class"
+        icon={<span className="text-teal-500">*</span>}
+      />
       <CustomInput
         lableText="Reference no"
         inputName="Reference_no"
@@ -128,7 +138,7 @@ function JobContent({ handleInputChange, formData ,handleDateChange}) {
           peekNextMonth
           showMonthDropdown
           selected={formData.assesmentDate || ""}
-          onChange={(date)=>handleDateChange(date,"assesmentDate")}
+          onChange={(date) => handleDateChange(date, "assesmentDate")}
           showYearDropdown
           dropdownMode="select"
           minDate={new Date()}
@@ -153,12 +163,14 @@ function JobContent({ handleInputChange, formData ,handleDateChange}) {
           showMonthDropdown
           showYearDropdown
           selected={formData.reviewDate || ""}
-          onChange={(date)=>handleDateChange(date,"reviewDate")}
+          onChange={(date) => handleDateChange(date, "reviewDate")}
           dropdownMode="select"
           minDate={new Date()}
         />
       </div>
 
+    
+   
       {/* Engineer comp */}
       <CustomInput
         lableText="Engineer"
@@ -168,6 +180,21 @@ function JobContent({ handleInputChange, formData ,handleDateChange}) {
         inputChange={handleInputChange}
         inputPlaceholder="The Old Stables, Hyde Hall Farm,Buntingford, Hertfordshire, SG90RU"
         icon={<span className="text-teal-500">*</span>}
+      />
+      {/* <TabButton/> */}
+      <TabButton
+        tabs={["Management", "Quality Control"]}
+        labelText="Quality checked by"
+      />
+         <SelectdInput
+        labelText="Amended Scope of works"
+        value={[
+          { value: "N/A", label: "N/A" },
+          { value: "LRA", label: "LRA" },
+          { value: "LRA Multi-Site", label: "LRA Multi-Site" },
+          { value: "LRA 20 items", label: "LRA 20 items" },
+          { value: "LRA 30 items", label: "LRA 30 items" },
+        ]}
       />
     </div>
   );
@@ -208,11 +235,14 @@ function Contact({ formData, handleInputChange }) {
   );
 }
 
-
 // ****************** contact component ************//
 function Visit({ formData, handleInputChange }) {
   return (
     <div>
+      <TabButton tabs={["Yes", "Aborted"]} labelText="Visit Undertaken" />
+
+      <TabButton tabs={["Yes", "No"]} labelText="Engineer Notes" />
+
       <CustomInput
         lableText="Notes"
         inputName="notes"
@@ -222,7 +252,22 @@ function Visit({ formData, handleInputChange }) {
         inputPlaceholder="Example notes"
         icon={<span className="text-teal-500">*</span>}
       />
+
      
+
+      <InnerAccordion
+        title="Additional Material Purchase Request 1"
+        content={
+          <Contact handleInputChange={handleInputChange} formData={formData} />
+        }
+      />
+
+      <InnerAccordion
+        title="Additional Material Purchase Request 1"
+        content={
+          <Contact handleInputChange={handleInputChange} formData={formData} />
+        }
+      />
     </div>
   );
 }

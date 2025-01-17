@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { FiPlusCircle } from "react-icons/fi";
+import { RxCross2 } from "react-icons/rx";
 
-const Accordion = ({ title, content }) => {
+const InnerAccordion = ({ title, content }) => {
   const [openIndex, setOpenIndex] = useState(false);
 
 
@@ -16,26 +17,21 @@ const Accordion = ({ title, content }) => {
         {/* Accordion Item 1 */}
         <div className=" overflow-hidden">
           <div
-            className="bg-teal-500 text-white p-4  flex gap-4 items-center rounded-lg "
+            className="bg-teal-500 text-white p-4  flex justify-between items-center rounded-lg "
             onClick={toggleAccordion}
           >
+            {/* Accordion Title */}
+            <span className="font-medium text-sm ps-4">{title}</span>
             {/* Icon Click Only */}
             <div className="cursor-pointer">
-              {openIndex  ? <IoIosArrowDown /> : <IoIosArrowForward />}
+              {openIndex  ?  <RxCross2 className="bg-red-700 rounded-sm"/> :<FiPlusCircle /> }
             </div>
-            {/* Accordion Title */}
-            <span className="font-medium">{title}</span>
+            
           </div>
-          {/* {openIndex  && (
-            <div className="">
-              <div className="rounded-lg mt-5 relative ">
-                <div>{content}</div>
-              </div>
-            </div>
-          )} */}
+    
           <div
             className={`transition-all duration-[500ms] ease-linear ${
-            openIndex ? "max-h-[1100px]" : "max-h-0"
+            openIndex ? "max-h-[1000px]" : "max-h-0"
         } overflow-hidden`}
           >
             <div className="rounded-lg mt-5 relative ">
@@ -49,4 +45,4 @@ const Accordion = ({ title, content }) => {
   );
 };
 
-export default Accordion;
+export default InnerAccordion;
