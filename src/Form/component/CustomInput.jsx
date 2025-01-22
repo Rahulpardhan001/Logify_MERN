@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TbInfoCircle } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineCameraAlt } from "react-icons/md";
 import Select from "react-select";
 
 const CustomInput = (props) => {
@@ -47,7 +48,7 @@ const CustomInput = (props) => {
         )}
       </label>
 
-      {/* input type file  */}
+      {/* input type file 
       {inputType == "file" && (
         <input
           type={inputType}
@@ -58,7 +59,8 @@ const CustomInput = (props) => {
           onChange={inputChange}
           className={`mt-1 px-3 py-2 focus-visible:outline-none  bg-teal-500 rounded-md w-[30%]   sm:text-sm ${customStyle}`}
         />
-      )}
+        
+      )} */}
       {/* Custom label */}
 
       {inputType == "text" && (
@@ -94,8 +96,75 @@ const CustomInput = (props) => {
 
 export default CustomInput;
 
-// *********************** tab Button *****************//
+// *********************** Summary  *****************//
+export function Summary({content}){
+  return(
+    <div className="flex flex-col gap-2 bg-[#fff] z-10 p-3 border border-[1px solid rgb(222, 228, 237)] mt-3 rounded-lg ">
+    <p className="text-[#6f6e6e] text-sm ">{content}</p>
+</div>
+  )
+}
 
+// *********************** input image *****************//
+export function InputImage({
+  inputType,
+  inputPlaceholder,
+  ids,
+  inputName,
+  icon,
+  inputChange,
+  customStyle,
+  lableText,
+  lableStyle,
+  imagePreview
+}) {
+  return (
+    <>
+      <div className="flex flex-col  gap-2  bg-[#fff] z-10 p-3 border border-[1px solid rgb(222, 228, 237)] mt-3 rounded-lg ">
+        {/* input type file  */}
+        <div className="flex justify-between  w-full">
+        <label
+          htmlFor={inputName}
+          className={`flex items-center relative  ${lableStyle}`}
+        >
+          <p className="flex text-normal-text items-center gap-1">
+            {icon} {lableText}
+          </p>
+        </label>
+
+        <div className=" w-32 relative">
+        <input
+          type={inputType}
+          placeholder={inputPlaceholder}
+          name={inputName}
+          id={ids}
+          accept="image/*" // Accept only image files
+          onChange={inputChange}
+          className={` px-1 w-full absolute top-0 focus-visible:outline-none  rounded-md opacity-0   sm:text-sm ${customStyle}`}
+        />
+        <span className=" flex items-center gap-1 bg-teal-500 text-white p-1 px-2 border w-[90%] rounded cursor-pointer "><MdOutlineCameraAlt />
+         <span className="text-sm font-semibold ">
+         Add Photo
+        </span></span>
+        </div>
+        </div>
+          {/* Image Preview */}
+          {imagePreview && (
+          <div className="mt-3 ">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-16 h-16 object-cover rounded"
+            />
+          </div>
+        )}
+       
+      </div>
+    </>
+  );
+}
+
+// *********************** tab Button *****************//
 export function TabButton({ tabs, labelText }) {
   const [activeTab, setActiveTab] = useState(tabs[0]); // Set the default active tab as the first tab
 
@@ -130,10 +199,7 @@ export function TabButton({ tabs, labelText }) {
   );
 }
 
-
-
 // *********************** seleted input Button *****************//
-
 export function SelectdInput({ labelText, value }) {
   console.log(value, "value is selectd ");
   return (
@@ -150,7 +216,6 @@ export function SelectdInput({ labelText, value }) {
             borderColor: state.isFocused
               ? "grey"
               : "border-[1px solid rgb(222, 228, 237)]",
-             
           }),
           option: (baseStyles, state) => ({
             ...baseStyles,
@@ -160,9 +225,8 @@ export function SelectdInput({ labelText, value }) {
             ":active": {
               backgroundColor: "1cb2a9",
             },
-            outline:'none'
+            outline: "none",
           }),
-         
         }}
         menuPlacement="top"
         options={value.map((item) => item)}

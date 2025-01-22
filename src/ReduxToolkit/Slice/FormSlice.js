@@ -6,7 +6,7 @@ const formSlice = createSlice({
   name: "form",
   initialState: {
      // **********job Report Accordion******//
-    sitePhoto:null,
+    sitePhoto:"",
     Reference_no: "",
     customer: "",
     delivery_Address: "",

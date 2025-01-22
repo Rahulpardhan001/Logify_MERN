@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatedFormData } from "../../../ReduxToolkit/Slice/FormSlice";
 import CustomInput, {
+  InputImage,
   SelectdInput,
   TabButton,
 } from "../../component/CustomInput";
@@ -13,13 +14,27 @@ import InnerAccordion from "../../component/InnerAccordion";
 function Page1() {
   const formData = useSelector((state) => state.form);
 
+  const [imagePreview, setImagePreview] = useState(formData.sitePhoto || null);
   const dispatch = useDispatch();
-  console.log("Form Data", formData);
+  console.log("Form Data", imagePreview);
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
     await dispatch(updatedFormData({ name, value }));
   };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Generate image preview URL
+      const objectUrl = URL.createObjectURL(file);
+      setImagePreview(objectUrl);
+
+      // Dispatch the file to Redux store (if required, depending on your API)
+      await dispatch(updatedFormData({ name: "sitePhoto",  value: objectUrl }));
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(formData, "forma dk");
@@ -41,6 +56,8 @@ function Page1() {
                 handleInputChange={handleInputChange}
                 formData={formData}
                 handleDateChange={handleDateChange}
+                handleImageChange={handleImageChange} // Pass image handler here
+                imagePreview={imagePreview}
               />
             }
           />
@@ -80,19 +97,21 @@ function Page1() {
 export default Page1;
 
 // ****************** job Content component ************//
-function JobContent({ handleInputChange, formData, handleDateChange }) {
+function JobContent({ handleInputChange, formData, handleDateChange, imagePreview,handleImageChange }) {
   return (
     <div>
       {/* input type file */}
-      <CustomInput
-        lableText="Site Photo"
-        inputName="sitePhoto"
-        inputType="file"
-        inputValue={formData.sitePhoto}
-        inputChange={handleInputChange}
-        customStyle="additional-custom-class"
-        icon={<span className="text-teal-500">*</span>}
-      />
+    <InputImage
+    lableText="Site Photo"
+   inputName="sitePhoto"
+   inputType="file"
+   inputValue={formData.sitePhoto}
+   inputChange={handleImageChange}
+   customStyle="additional-custom-class"
+   icon={<span className="text-teal-500">*</span>}
+   imagePreview={imagePreview}
+    />
+    
       <CustomInput
         lableText="Reference no"
         inputName="Reference_no"
@@ -158,7 +177,7 @@ function JobContent({ handleInputChange, formData, handleDateChange }) {
         <DatePicker
           className="mt-1 px-3 py-2 focus-visible:outline-none text-[#acb0c3] bg-[#f1f2f3] rounded-md   w-[370px] sm:text-sm"
           dateFormat="dd/MM/yyyy"
-          placeholderText="02/06/2024 "
+          placeholderText="02/06/2024"
           peekNextMonth
           showMonthDropdown
           showYearDropdown
@@ -260,6 +279,7 @@ function Visit({ formData, handleInputChange }) {
         content={
           <Contact handleInputChange={handleInputChange} formData={formData} />
         }
+        
       />
 
       <InnerAccordion
