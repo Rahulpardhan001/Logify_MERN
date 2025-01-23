@@ -26,13 +26,7 @@ const Accordion = ({ title, content }) => {
             {/* Accordion Title */}
             <span className="font-medium">{title}</span>
           </div>
-          {/* {openIndex  && (
-            <div className="">
-              <div className="rounded-lg mt-5 relative ">
-                <div>{content}</div>
-              </div>
-            </div>
-          )} */}
+         
           <div
             className={`transition-all duration-[500ms] ease-linear ${
             openIndex ? "max-h-[1100px]" : "max-h-0"

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 // import Form from "../components/Form";
 import { IoCheckmarkSharp } from "react-icons/io5";
+import Page1 from "./Page1";
+import Page2 from "./Page2";
 
-import Page1 from "../Form/FormOverview/Page1/Page1";
-import Page2 from "../Form/FormOverview/Page2/Page2";
-import Page3 from "../Form/FormOverview/Page3/Page3";
+// import Page1 from "../Form/FormOverview/Page1/Page1";
+// import Page2 from "../Form/FormOverview/Page2/Page2";
+// import Page3 from "../Form/FormOverview/Page3/Page3";
 // import FormView1 from "../Form/FormOverview/FormView1";
 
 
@@ -64,7 +66,7 @@ function Logify() {
         <div className="w-[50%] mt-[80px] ">
         {currentPage === 1 && <Page1/>}
         {currentPage === 2 && <Page2/>}
-        {currentPage === 3 && <Page3/>}
+        {/* {currentPage === 3 && <Page3/>} */}
           {/* {currentPage === 2 && <Form currentPage={currentPage} />}
           {currentPage === 3 && <Form currentPage={currentPage} />} */}
 

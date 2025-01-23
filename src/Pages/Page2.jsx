@@ -1,8 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatedFormData } from "../../../ReduxToolkit/Slice/FormSlice";
-import CustomInput, { Summary, TabButton } from "../../component/CustomInput";
-import Accordion from "../../component/Accordion";
+import Accordion from "../component/Accordion/Accordion";
+import { TabButton } from "../component/CustomInput/TabButton";
+import {Summary} from "../component/CustomInput/Summary"
+// import { updatedFormData } from "../../../ReduxToolkit/Slice/FormSlice";
+// import CustomInput, { Summary, TabButton } from "../../component/CustomInput";
+// import Accordion from "../../component/Accordion";
 
 function Page2() {
   const form = useSelector((state) => state.form);
@@ -48,7 +51,10 @@ export function NestedComponent({ formData, handleInputChange }) {
   return (
     <div>
       <Summary
-        content="All uRisk employees must ensure they understand and adhere to all uRisk and its customers health and safety policies, statements, procedures and Risk Assessment Method Statements (RAMS) before starting works on site. You must complete a 'Site Specific Risk Assessment' before commencing any works. You are not permitted to start work without firstly completing this assessment. Should you however proceed without completing the assessment, you do so at your own risk with full responsibility for your actions."
+      content="All uRisk employees must ensure they understand and adhere to all uRisk and its customers health and safety policies,
+       statements, procedures and Risk Assessment Method Statements (RAMS) before starting works on site. You must complete a 'Site Specific Risk Assessment' before commencing any works. You are not permitted to
+        start work without firstly completing this assessment. Should you however proceed without completing the assessment, you do so at your
+         own risk with full responsibility for your actions."
       />
       <Access />
     </div>
