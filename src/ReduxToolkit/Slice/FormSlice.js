@@ -1,5 +1,3 @@
-//  import {createslice} from '@reduxjs/toolkit'
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const formSlice = createSlice({
@@ -14,7 +12,7 @@ const formSlice = createSlice({
       reviewDate: "",
       engineer: "",
     },
-    contact: {
+    Contact: {
       contact: "",
       contact_email: "",
       contact_phone: "",
@@ -27,16 +25,20 @@ const formSlice = createSlice({
   },
   reducers: {
     updatedFormData: (state, action) => {
-      console.log(action.payload, "slice data");
-      const { name, value } = action.payload;
-      state[name] = value;
+    // debugger;
+      const { section, name, value } = action.payload;
+      console.log("Section:", section, "Name:", name, "Value:", value,"action.payload",action.payload);
+
+      // Validate if the section exists in the state
+      if (state[section]) {
+        // Update the nested field
+        state[section][name] = value || ""; // Default to an empty string if no value is provided
+      } else {
+        console.error(`Section "${section}" does not exist in the state.`);
+      }
     },
-    updateField:(state,action)=>{
-      const{section, name, value} = action.payload;
-      state[section][name] = value;
-    }
   },
 });
 
-export const { updatedFormData,updateField } = formSlice.actions;
+export const { updatedFormData } = formSlice.actions;
 export default formSlice.reducer;

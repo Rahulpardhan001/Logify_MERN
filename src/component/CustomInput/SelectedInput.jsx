@@ -1,7 +1,15 @@
 import React from "react";
 import Select from "react-select";
+import { updatedFormData } from "../../ReduxToolkit/Slice/FormSlice";
+import { useDispatch } from "react-redux";
 
-export function SelectdInput({ labelText, value }) {
+export function SelectdInput({ labelText, value, section, name  }) {
+  
+  const dispatch = useDispatch();
+
+  const handleChange = (selectedOption) => {
+    dispatch(updatedFormData({ section, name, value: selectedOption.value }));
+  };
     // console.log(value, "value is selectd ");
     return (
       <div className="bg-[#fff] z-10 p-3 border border-[1px solid rgb(222, 228, 237)] mt-3 rounded-lg">
@@ -31,6 +39,7 @@ export function SelectdInput({ labelText, value }) {
           }}
           menuPlacement="top"
           options={value.map((item) => item)}
+          onChange={handleChange}
         />
       </div>
     );

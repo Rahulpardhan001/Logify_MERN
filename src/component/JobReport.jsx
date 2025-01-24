@@ -1,15 +1,33 @@
 import React from "react";
-
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { CustomInput } from "./CustomInput/CustomInput";
 import { InputImage } from "./CustomInput/InputImage";
 import { TabButton } from "./CustomInput/TabButton";
 import { SelectdInput } from "./CustomInput/SelectedInput";
+import { useDispatch, useSelector } from "react-redux";
+import { updatedFormData } from "../ReduxToolkit/Slice/FormSlice";
+import { DatePickers } from "./CustomInput/DatePickers";
 
 
 
-export function JobReport({ handleInputChange, formData, handleDateChange, imagePreview,handleImageChange }) {
+export function JobReport({  imagePreview,handleImageChange }) {
+  const dispatch = useDispatch();
+  const formData = useSelector  ((state) => state.form);
+
+  const handleJobChange =(e,section)=>{
+    const {name,value} =  e.target
+    let data = {
+      section,name,value,
+    }
+     dispatch(updatedFormData(data))
+  }
+
+   // **********************Handle date change*****************//
+   const handleDateChange = async (value, name,section) => {
+    console.log(section,"section",value,"value", name,"ara hai ya nhi")
+    const serializedDate = value ? value.toISOString() : null; 
+     dispatch(updatedFormData({section, name, value:serializedDate }));
+  };
   return (
     <div>
       {/* input type file */}
@@ -28,8 +46,8 @@ export function JobReport({ handleInputChange, formData, handleDateChange, image
         lableText="Reference no"
         inputName="Reference_no"
         inputType="text"
-        inputValue={formData.Reference_no}
-        inputChange={handleInputChange}
+        inputValue={formData.jobReport.Reference_no}
+        inputChange={(e)=>handleJobChange(e,"jobReport")}
         inputPlaceholder="uRisk"
         icon={<span className="text-teal-500">*</span>}
       />
@@ -37,8 +55,8 @@ export function JobReport({ handleInputChange, formData, handleDateChange, image
         lableText="Customer"
         inputName="customer"
         inputType="text"
-        inputValue={formData.customer}
-        inputChange={handleInputChange}
+        inputValue={formData.jobReport.customer}
+        inputChange={(e)=>handleJobChange(e,"jobReport")}
         inputPlaceholder="uRisk"
         icon={<span className="text-teal-500">*</span>}
       />
@@ -46,69 +64,36 @@ export function JobReport({ handleInputChange, formData, handleDateChange, image
         lableText="Delivery Address"
         inputName="delivery_Address"
         inputType="textarea"
-        inputValue={formData.delivery_Address}
-        inputChange={handleInputChange}
+        inputValue={formData.jobReport.delivery_Address}
+        inputChange={(e)=>handleJobChange(e,"jobReport")}
         inputPlaceholder="The Old Stables, Hyde Hall Farm,Buntingford, Hertfordshire, SG90RU"
         icon={<span className="text-teal-500">*</span>}
       />
       {/* *************Assignmet  date */}
-      <div className="bg-[#fff] z-10 p-3 border border-[1px solid rgb(222, 228, 237)] mt-3 rounded-lg  ">
-        <div className="flex gap-2">
-          <span className="text-teal-500">*</span>
-          <label
-            className="flex text-normal-text items-center gap-1"
-            htmlFor=""
-          >
-            Assessment date
-          </label>
-        </div>
-        <DatePicker
-          className="mt-1 px-3 py-2 focus-visible:outline-none text-[#acb0c3] bg-[#f1f2f3] rounded-md    w-[370px] sm:text-sm"
-          dateFormat="dd/MM/yyyy"
+        <DatePickers
+          inputlabel = "Assessment date"
           placeholderText="02/06/2024"
-          peekNextMonth
-          showMonthDropdown
-          selected={formData.assesmentDate || ""}
-          onChange={(date) => handleDateChange(date, "assesmentDate")}
-          showYearDropdown
+          selected={formData.jobReport.assesmentDate || ""}
+          onChange={(date) => handleDateChange(date,"assesmentDate", "jobReport")}
           dropdownMode="select"
-          minDate={new Date()}
-        />
-      </div>
-      {/* *************review date */}
-      <div className="bg-[#fff] z-10 p-3 border border-[1px solid rgb(222, 228, 237)] mt-3 rounded-lg  ">
-        <div className="flex gap-2">
-          <span className="text-teal-500">*</span>
-          <label
-            className="flex text-normal-text items-center gap-1"
-            htmlFor=""
-          >
-            Review date
-          </label>
-        </div>
-        <DatePicker
-          className="mt-1 px-3 py-2 focus-visible:outline-none text-[#acb0c3] bg-[#f1f2f3] rounded-md   w-[370px] sm:text-sm"
-          dateFormat="dd/MM/yyyy"
+          />
+          {/* *************Review  date */}
+          <DatePickers
+          inputlabel = "Review date"
           placeholderText="02/06/2024"
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          selected={formData.reviewDate || ""}
-          onChange={(date) => handleDateChange(date, "reviewDate")}
+          selected={formData.jobReport.reviewDate || ""}
+          onChange={(date) => handleDateChange(date,"reviewDate", "jobReport")}
           dropdownMode="select"
-          minDate={new Date()}
         />
-      </div>
-
-    
+      
    
       {/* Engineer comp */}
       <CustomInput
         lableText="Engineer"
         inputName="engineer"
         inputType="text"
-        inputValue={formData.engineer}
-        inputChange={handleInputChange}
+        inputValue={formData.jobReport.engineer}
+        inputChange={(e)=>handleJobChange(e,"jobReport")}
         inputPlaceholder="The Old Stables, Hyde Hall Farm,Buntingford, Hertfordshire, SG90RU"
         icon={<span className="text-teal-500">*</span>}
       />
@@ -126,6 +111,8 @@ export function JobReport({ handleInputChange, formData, handleDateChange, image
           { value: "LRA 20 items", label: "LRA 20 items" },
           { value: "LRA 30 items", label: "LRA 30 items" },
         ]}
+        section="jobReport" // Redux section
+       name="amendedScopeOfWorks" // Redux field
       />
     </div>
   );

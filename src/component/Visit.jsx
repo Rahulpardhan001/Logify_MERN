@@ -5,8 +5,19 @@ import { TabButton } from "./CustomInput/TabButton";
 import InnerAccordion from "./InnerAccordion/InnerAccordion";
 import { CustomInput } from "./CustomInput/CustomInput";
 import { Contact } from "./Contact";
+import { updatedFormData } from "../ReduxToolkit/Slice/FormSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-export const Visit = ({ handleInputChange, formData }) => {
+export const Visit = () => {
+  const formData = useSelector((state) => state.form);
+  const dispatch = useDispatch();
+  const handleVisitChange =(e,section)=>{
+    const {name,value} =  e.target
+    let data = {
+      section,name,value,
+    }
+     dispatch(updatedFormData(data))
+  }
   return (
     <div>
       <TabButton tabs={["Yes", "Aborted"]} labelText="Visit Undertaken" />
@@ -14,12 +25,12 @@ export const Visit = ({ handleInputChange, formData }) => {
         lableText="Notes"
         inputName="notes"
         inputType="textarea"
-        inputValue={formData.notes}
-        inputChange={handleInputChange}
+        inputValue={formData.visit.notes}
+        inputChange={(e)=>handleVisitChange(e,"visit")}
       />
       <InnerAccordion
         title="Additional Material Purchase Request"
-        content={<Contact handleInputChange={handleInputChange} formData={formData} />}
+        content={<Contact />}
       />
     </div>
   );

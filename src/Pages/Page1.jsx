@@ -10,19 +10,24 @@ import Accordion from "../component/Accordion/Accordion";
 
 function Page1() {
   const formData = useSelector((state) => state.form);
+  // console.log(formData,"form data")
   const dispatch = useDispatch();
 
-  const handleInputChange = async (e) => {
-    const { name, value } = e.target;
-    await dispatch(updatedFormData({ name, value }));
-  };
+  // const handleInputChange = async (e, section) => {
+  //   const { name, value } = e.target;
+  //   // console.log(value, "value is")
+ 
+  //    dispatch(updatedFormData({section, name, value }));
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
+   
     const data = new FormData();
     data.append("jobReport", JSON.stringify(formData?.jobReport));
     data.append("Contact", JSON.stringify(formData?.Contact));
     data.append("visit", JSON.stringify(formData?.visit));
+    console.log([...data.entries()],"data data")
     dispatch(addFormPage1(data));
   };
 
@@ -30,15 +35,15 @@ function Page1() {
     <form onSubmit={submitHandler}>
       <Accordion
         title="Job Report"
-        content={<JobReport handleInputChange={handleInputChange} formData={formData} />}
+        content={<JobReport/>}
       />
       <Accordion
         title="Contact"
-        content={<Contact handleInputChange={handleInputChange} formData={formData} />}
+        content={<Contact/>}
       />
       <Accordion
         title="Visit"
-        content={<Visit handleInputChange={handleInputChange} formData={formData} />}
+        content={<Visit/>}
       />
       <div className="flex justify-center align-middle fixed bottom-0 left-[385px] z-1 mb-2 ">
           <button

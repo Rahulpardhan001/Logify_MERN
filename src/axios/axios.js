@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 // import { getCookie } from "../utils/cookies";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": 'application/json',
   },
@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 );
 
 const handleRequest = async (method, url, data = null, isMultipart = false) => {
-// debugger
+debugger
   try {
     const headers = isMultipart ? { 'Content-Type': 'multipart/form-data' } : { 'Content-Type': 'application/json' };
     const response = await axiosInstance.request(

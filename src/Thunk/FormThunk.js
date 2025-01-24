@@ -3,6 +3,7 @@ import axios from "axios";
 import handleRequest from "../axios/axios";
 
 export const addFormPage1 = createAsyncThunk("/page1", async (formData) => {
+  // debugger;
 
   try {
     const res = await handleRequest("POST","/page1",formData,true)
