@@ -2,12 +2,13 @@
 import React, {useState } from "react";
 
 
-export function TabButton({ tabs, labelText }) {
+export function TabButton({ tabs, labelText,section,name,handleChange }) {
     const [activeTab, setActiveTab] = useState(tabs[0]); // Set the default active tab as the first tab
   
     // Handle the tab change
     const handleActiveTab = (tab) => {
       setActiveTab(tab); // Update the active tab
+      handleChange({ section, name, value: tab });
     };
   
     return (
