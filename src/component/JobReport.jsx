@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { CustomInput } from "./CustomInput/CustomInput";
 import { InputImage } from "./CustomInput/InputImage";
@@ -8,46 +8,67 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatedFormData } from "../ReduxToolkit/Slice/FormSlice";
 import { DatePickers } from "./CustomInput/DatePickers";
 
-
-
-export function JobReport({  imagePreview,handleImageChange }) {
+export function JobReport() {
   const dispatch = useDispatch();
-  const formData = useSelector  ((state) => state.form);
+  const formData = useSelector((state) => state.form);
+  const [imagePreview, setImagePreview] = useState(formData.sitePhoto || null);
 
-  const handleJobChange =(e,section)=>{
-    const {name,value} =  e.target
+  const handleJobChange = (e, section) => {
+  
+    // debugger;
+    const { name, value } = e.target;
     let data = {
-      section,name,value,
+      section,
+      name,
+      value,
+    };
+    dispatch(updatedFormData(data));
+  };
+  
+  
+  const handleImageChange = async (e,section) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Generate image preview URL
+      const objectUrl = URL.createObjectURL(file);
+      setImagePreview(objectUrl);
+
+      // Dispatch the file to Redux store (if required, depending on your API)
+      await dispatch(updatedFormData({section, name: "sitePhoto",  value: objectUrl }));
     }
-     dispatch(updatedFormData(data))
+  };
+
+  const handleTabChange = ({section,name,value})=>{
+    // debugger
+    console.log("section",section,name,value)
   }
 
-   // **********************Handle date change*****************//
-   const handleDateChange = async (value, name,section) => {
-    console.log(section,"section",value,"value", name,"ara hai ya nhi")
-    const serializedDate = value ? value.toISOString() : null; 
-     dispatch(updatedFormData({section, name, value:serializedDate }));
+  // **********************Handle date change*****************//
+  const handleDateChange = async (value, name, section) => {
+    console.log(section, "section", value, "value", name, "ara hai ya nhi");
+    const serializedDate = value ? value.toISOString() : null;
+    dispatch(updatedFormData({ section, name, value: serializedDate }));
   };
   return (
     <div>
       {/* input type file */}
-    <InputImage
-    lableText="Site Photo"
-   inputName="sitePhoto"
-   inputType="file"
-   inputValue={formData.sitePhoto}
-   inputChange={handleImageChange}
-   customStyle="additional-custom-class"
-   icon={<span className="text-teal-500">*</span>}
-   imagePreview={imagePreview}
-    />
-    
+      <InputImage
+        lableText="Site Photo"
+        inputName="sitePhoto"
+        inputType="file"
+        inputValue={formData.sitePhoto}
+        inputChange={(e)=>handleImageChange(e,"jobReport")}
+        customStyle="additional-custom-class"
+        icon={<span className="text-teal-500">*</span>}
+        imagePreview={imagePreview}
+      />
+
       <CustomInput
         lableText="Reference no"
-        inputName="Reference_no"
+        inputName="ReferenceNo"
         inputType="text"
-        inputValue={formData.jobReport.Reference_no}
-        inputChange={(e)=>handleJobChange(e,"jobReport")}
+        inputValue={formData.jobReport.ReferenceNo}
+        inputChange={(e) => handleJobChange(e, "jobReport")}
         inputPlaceholder="uRisk"
         icon={<span className="text-teal-500">*</span>}
       />
@@ -56,44 +77,45 @@ export function JobReport({  imagePreview,handleImageChange }) {
         inputName="customer"
         inputType="text"
         inputValue={formData.jobReport.customer}
-        inputChange={(e)=>handleJobChange(e,"jobReport")}
+        inputChange={(e) => handleJobChange(e, "jobReport")}
         inputPlaceholder="uRisk"
         icon={<span className="text-teal-500">*</span>}
       />
       <CustomInput
         lableText="Delivery Address"
-        inputName="delivery_Address"
+        inputName="deliveryAddress"
         inputType="textarea"
-        inputValue={formData.jobReport.delivery_Address}
-        inputChange={(e)=>handleJobChange(e,"jobReport")}
+        inputValue={formData.jobReport.deliveryAddress}
+        inputChange={(e) => handleJobChange(e, "jobReport")}
         inputPlaceholder="The Old Stables, Hyde Hall Farm,Buntingford, Hertfordshire, SG90RU"
         icon={<span className="text-teal-500">*</span>}
       />
       {/* *************Assignmet  date */}
-        <DatePickers
-          inputlabel = "Assessment date"
-          placeholderText="02/06/2024"
-          selected={formData.jobReport.assesmentDate || ""}
-          onChange={(date) => handleDateChange(date,"assesmentDate", "jobReport")}
-          dropdownMode="select"
-          />
-          {/* *************Review  date */}
-          <DatePickers
-          inputlabel = "Review date"
-          placeholderText="02/06/2024"
-          selected={formData.jobReport.reviewDate || ""}
-          onChange={(date) => handleDateChange(date,"reviewDate", "jobReport")}
-          dropdownMode="select"
-        />
-      
-   
+      <DatePickers
+        inputlabel="Assessment date"
+        placeholderText="02/06/2024"
+        selected={formData.jobReport.assesmentDate || ""}
+        onChange={(date) =>
+          handleDateChange(date, "assesmentDate", "jobReport")
+        }
+        dropdownMode="select"
+      />
+      {/* *************Review  date */}
+      <DatePickers
+        inputlabel="Review date"
+        placeholderText="02/06/2024"
+        selected={formData.jobReport.reviewDate || ""}
+        onChange={(date) => handleDateChange(date, "reviewDate", "jobReport")}
+        dropdownMode="select"
+      />
+
       {/* Engineer comp */}
       <CustomInput
         lableText="Engineer"
         inputName="engineer"
         inputType="text"
         inputValue={formData.jobReport.engineer}
-        inputChange={(e)=>handleJobChange(e,"jobReport")}
+        inputChange={(e) => handleJobChange(e, "jobReport")}
         inputPlaceholder="The Old Stables, Hyde Hall Farm,Buntingford, Hertfordshire, SG90RU"
         icon={<span className="text-teal-500">*</span>}
       />
@@ -101,8 +123,13 @@ export function JobReport({  imagePreview,handleImageChange }) {
       <TabButton
         tabs={["Management", "Quality Control"]}
         labelText="Quality checked by"
+        section="jobReport"
+        name="qualityCheckedBy" 
+        handleChange={handleTabChange}
       />
-         <SelectdInput
+
+      {/* selected dropdown input */}
+      <SelectdInput
         labelText="Amended Scope of works"
         value={[
           { value: "N/A", label: "N/A" },
@@ -112,7 +139,7 @@ export function JobReport({  imagePreview,handleImageChange }) {
           { value: "LRA 30 items", label: "LRA 30 items" },
         ]}
         section="jobReport" // Redux section
-       name="amendedScopeOfWorks" // Redux field
+        name="amendedScopeOfWorks" // Redux field
       />
     </div>
   );
