@@ -5,21 +5,22 @@ const formSlice = createSlice({
   initialState: {
     jobReport: {
       sitePhoto: "",
-      Reference_no: "",
+      ReferenceNo: "",
       customer: "",
-      delivery_Address: "",
+      deliveryAddress: "",
       assesmentDate: "",
       reviewDate: "",
       engineer: "",
+      amendedScopeOfWorks:""
     },
     Contact: {
       contact: "",
-      contact_email: "",
-      contact_phone: "",
+      contactPhone: "",
+      contactEmail: "",
     },
     visit: {
       visitUndertaken: "",
-      engineerNotes: "",
+      // engineerNotes: "engineerNotes",
       notes: "",
     },
   },
