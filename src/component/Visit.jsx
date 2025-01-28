@@ -28,10 +28,10 @@ export const Visit = () => {
         inputValue={formData.visit.notes}
         inputChange={(e)=>handleVisitChange(e,"visit")}
       />
-      <InnerAccordion
+      {/* <InnerAccordion
         title="Additional Material Purchase Request"
         content={<Contact />}
-      />
+      /> */}
     </div>
   );
 };
