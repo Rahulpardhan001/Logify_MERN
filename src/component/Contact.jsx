@@ -29,18 +29,18 @@ export function Contact() {
         />
         <CustomInput
           lableText="Contact phone"
-          inputName="contact_phone"
+          inputName="contactPhone"
           inputType="text"
-          inputValue={formData.Contact.contact_phone}
+          inputValue={formData.Contact.contactPhone}
           inputChange={(e)=>handleContactChange(e,"Contact")}
           inputPlaceholder="03330905554"
           icon={<span className="text-teal-500">*</span>}
         />
         <CustomInput
           lableText="Contact email"
-          inputName="contact_email"
+          inputName="contactEmail"
           inputType="text"
-          inputValue={formData.Contact.contact_email}
+          inputValue={formData.Contact.contactEmail}
           inputChange={(e)=>handleContactChange(e,"Contact")}
           inputPlaceholder="03330905554"
           icon={<span className="text-teal-500">*</span>}
