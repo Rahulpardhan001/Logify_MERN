@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 );
 
 const handleRequest = async (method, url, data = null, isMultipart = false) => {
-debugger
+// debugger
   try {
     const headers = isMultipart ? { 'Content-Type': 'multipart/form-data' } : { 'Content-Type': 'application/json' };
     const response = await axiosInstance.request(

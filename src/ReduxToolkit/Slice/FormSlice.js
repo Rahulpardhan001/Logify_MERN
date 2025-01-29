@@ -19,7 +19,7 @@ const formSlice = createSlice({
       contactEmail: "",
     },
     visit: {
-      visitUndertaken: "",
+      // visitUndertaken: "",
       // engineerNotes: "engineerNotes",
       notes: "",
     },
@@ -28,7 +28,7 @@ const formSlice = createSlice({
     updatedFormData: (state, action) => {
     // debugger;
       const { section, name, value } = action.payload;
-      console.log("Section:", section, "Name:", name, "Value:", value,"action.payload",action.payload);
+      // console.log("Section:", section, "Name:", name, "Value:", value,"action.payload",action.payload);
 
       // Validate if the section exists in the state
       if (state[section]) {
